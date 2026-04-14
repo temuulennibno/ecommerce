@@ -38,20 +38,21 @@ export default function Home() {
     }
 
     setLoading(true);
+    setError("");
 
     fetch(url)
       .then((res) => res.json())
       .then((data: ProductApiResponse) => {
         setProducts(data.products);
         setTotal(data.total);
-        setSkip(data.skip);
-        setLoading(false);
       })
       .catch(() => {
         setError("алдаа гарсан");
+      })
+      .finally(() => {
         setLoading(false);
       });
-  }, [skip, search, category]);
+  }, [skip, search, category, PRODUCTS_PER_PAGE]);
 
   // TODO 10: Ачааллын төлөв (loading state)
 
