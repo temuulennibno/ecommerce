@@ -52,3 +52,14 @@ export type ProductCategory = {
   name: string;
   url: string;
 };
+
+export type User = {
+  accessToken: string;
+  email: string;
+  firstName: string;
+  gender: string;
+  id: number;
+  image: string;
+  lastName: string;
+  username: string;
+};
