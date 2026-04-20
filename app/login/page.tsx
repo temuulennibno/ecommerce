@@ -7,8 +7,6 @@ import { UserContext } from "../providers/user-providers";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const router = useRouter();
   useEffect(() => {
