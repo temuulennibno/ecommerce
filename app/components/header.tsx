@@ -3,7 +3,7 @@ import { UserContext } from "../providers/user-provider";
 import Link from "next/link";
 
 export const Header = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
       <div className="container flex justify-between w-full py-4 items-center">

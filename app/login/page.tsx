@@ -1,32 +1,14 @@
 "use client";
-
-// TODO 1: React hook-уудыг импортлох (useState)
-
-// TODO 2: useRouter импортлох (next/navigation)
-
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../providers/user-provider";
 import { useRouter } from "next/navigation";
 
-// TODO 3: LoginResponse төрөл зарлах
-// API: https://dummyjson.com/auth/login
-// Method: POST
-// Body: { username: string, password: string, expiresInMins?: number }
-// Хариу: { id, username, email, firstName, lastName, gender, image, accessToken, refreshToken }
-
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
-  // TODO 4: useRouter hook ашиглах
   const router = useRouter();
-
-  // TODO 5: State хувьсагчдыг зарлах
-  // username - нэвтрэх нэр, эхлэх утга: ""
-  // password - нууц үг, эхлэх утга: ""
-  // error    - алдааны мессеж, эхлэх утга: ""
-  // loading  - ачааллын төлөв, эхлэх утга: false
 
   useEffect(() => {
     if (user) {
@@ -34,7 +16,6 @@ export default function LoginPage() {
     }
   }, [user]);
 
-  // TODO 6: handleSubmit функц бичих
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     fetch("https://dummyjson.com/auth/login", {
@@ -78,7 +59,7 @@ export default function LoginPage() {
       <main className="mx-auto max-w-7xl px-6 py-10">
         <div className="mx-auto max-w-sm">
           {!user ? (
-            <form className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
               <h2 className="mb-6 text-lg font-semibold text-zinc-900 dark:text-zinc-100">Нэвтрэх</h2>
 
               {/* TODO 8: error утгатай үед алдааны мессеж харуулах */}
@@ -88,7 +69,6 @@ export default function LoginPage() {
                 <label htmlFor="username" className="mb-1.5 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   Нэвтрэх нэр
                 </label>
-                {/* TODO 9: value={username} onChange холбох */}
                 <input
                   value={username}
                   onChange={(e) => {
@@ -149,11 +129,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-// БОНУС TODO 13: Нэвтэрсэн хэрэглэгчийн мэдээлэл авах
-// GET https://dummyjson.com/auth/me
-// Headers: { Authorization: "Bearer <accessToken>" }
-
-// БОНУС TODO 14: Token шинэчлэх (refresh)
-// POST https://dummyjson.com/auth/refresh
-// Body: { refreshToken, expiresInMins: 60 }
