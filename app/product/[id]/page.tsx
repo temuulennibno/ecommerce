@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Product } from "@/app/type";
 import { HeaderId } from "@/app/components/HeaderId";
+import axios from "axios";
 export default function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
@@ -15,15 +16,10 @@ export default function ProductDetail() {
     if (!id) return;
     setLoading(true);
     setError("");
-    fetch(`https://dummyjson.com/products/${id}`)
+    axios
+      .get(`https://dummyjson.com/products/${id}`)
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Something went wrong");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setProduct(data);
+        setProduct(res.data);
       })
       .catch((err) => {
         setError(err.message || "Something went wrong");
@@ -31,6 +27,22 @@ export default function ProductDetail() {
       .finally(() => {
         setLoading(false);
       });
+    // fetch(`https://dummyjson.com/products/${id}`)
+    //   .then((res) => {
+    //     if (!res.ok) {
+    //       throw new Error("Something went wrong");
+    //     }
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     setProduct(data);
+    //   })
+    //   .catch((err) => {
+    //     setError(err.message || "Something went wrong");
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }, [id]);
   const stock = product?.stock ?? 0;
   const stockColor =

@@ -8,6 +8,7 @@ import { Nav } from "./components/Nav";
 import { Search } from "./components/Search";
 import { Pagenation } from "./components/Pagenation";
 import { Footer } from "./components/Footer";
+import axios from "axios";
 const PRODUCTS_PER_PAGE = 10;
 export default function Home() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -29,6 +30,7 @@ export default function Home() {
     setSearch(e.target.value);
     setSkip(0);
   };
+
   useEffect(() => {
     let url = `https://dummyjson.com/products?limit=${PRODUCTS_PER_PAGE}&skip=${skip}`;
     if (category) {
@@ -38,9 +40,9 @@ export default function Home() {
     }
     setLoading(true);
     setError("");
-    fetch(url)
-      .then((res) => res.json())
-      .then((data: ProductApiResponse) => {
+    axios
+      .get<ProductApiResponse>(url)
+      .then(({ data }) => {
         setProducts(data.products);
         setTotal(data.total);
       })

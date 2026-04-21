@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { UserContext } from "../providers/user-providers";
+import axios from "axios";
 export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,21 +18,27 @@ export default function LoginPage() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    fetch("https://dummyjson.com/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-        Accepts: "application/json",
-      },
-    })
+    axios
+      .post("https://dummyjson.com/auth/login", { username, password })
       .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setUser(data);
+        setUser(res.data);
         router.push("/");
       });
+    // fetch("https://dummyjson.com/auth/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({ username, password }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accepts: "application/json",
+    //   },
+    // })
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     setUser(data);
+    //     router.push("/");
+    //   });
   };
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
