@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../providers/user-provider";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -18,21 +19,26 @@ export default function LoginPage() {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    fetch("https://dummyjson.com/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-        Accepts: "application/json",
-      },
-    })
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setUser(data);
-        router.push("/");
-      });
+
+    axios.post("https://dummyjson.com/auth/login", { username, password }).then((res) => {
+      setUser(res.data);
+      router.push("/");
+    });
+    // fetch("https://dummyjson.com/auth/login", {
+    //   method: "POST",
+    //   body: JSON.stringify({ username, password }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accepts: "application/json",
+    //   },
+    // })
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     setUser(data);
+    //     router.push("/");
+    //   });
   };
 
   return (
